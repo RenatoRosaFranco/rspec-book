@@ -8,11 +8,7 @@ RSpec.describe Contact, type: :model do
   end
 
   it 'is a valid with a firstname, lastname and email' do
-    contact = Contact.new(
-        firstname: 'Renato',
-        lastname: 'Franco',
-        email: 'contato@renato-franco.com.br'
-    )
+    contact = FactoryBot.build(:contact)
     expect(contact).to be_valid
   end
 
