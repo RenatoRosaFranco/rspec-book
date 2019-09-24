@@ -2,20 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Phone, type: :model do
   it 'does not allow duplicate phone number per contact' do
-    contact = Contact.create(
-        firstname: 'Renato',
-        lastname: 'Franco',
-        email: 'renato-franco@gmail.com'
+    contact = FactoryBot.create(:contact)
+    
+    FactoryBot.create(:home_phone, 
+      phone_type: '(11) 97195-6599',
+      contact: contact
     )
 
-    contact.phones.create(
-        phone_type: 'home',
-        phone_number: '(11) 997195-6599'
-    )
-
-    mobile_phone = contact.phones.build(
-        phone_type: 'mobile',
-        phone_number: '(11) 997195-6599'
+    mobile_phone = FactoryBot.build(:mobile_phone, 
+      phone_type: '(11) 97195-6599', 
+      contact: contact
     )
 
     mobile_phone.valid?
@@ -23,23 +19,7 @@ RSpec.describe Phone, type: :model do
   end
 
   it 'allows two contact to share a phone number' do
-    contact = Contact.create(
-        firstname: 'Joe',
-        lastname:  'Tester',
-        email: 'joetester@example.com'
-    )
-
-    contact.phones.create(
-        phone_type: 'home',
-        phone_number: '(11) 99621-6499'
-    )
-
-    other_contact = Contact.new
-    other_phone = other_contact.phones.build(
-        phone_type: 'home',
-        phone_number: '(11) 99621-6499'
-    )
-
-    expect(other_phone).to be_valid
+    FactoryBot.create(:home_phone)
+    expect(FactoryBot.build(:home_phone, phone_number: "(11) 97195-6599")).to be_valid
   end
 end
