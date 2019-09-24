@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContactController < ApplicationController
+class ContactsController < ApplicationController
 	before_action :set_contact, only: [:show, :edit, :update, :destroy]
 	respond_to :html, :json, :js
 
